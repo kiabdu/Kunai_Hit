@@ -6,11 +6,12 @@ using UnityEngine;
 public class LogController : MonoBehaviour
 {
     private float _rotationSpeed = 100f;
-    private Animator _animator;
+    private Animation _animation;
     
     void Start()
     {
-        _animator = gameObject.GetComponent<Animator>();
+        _animation = gameObject.GetComponent<Animation>();
+        _animation.wrapMode = WrapMode.Once;
     }
 
     void Update()
@@ -22,7 +23,11 @@ public class LogController : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Kunai") && !KunaiController.IsGameOver)
         {
-            _animator.Play("LogHitAnimation");
+            Debug.Log("Kunai hit the log");
+            //play the "LogHitAnimation" with the new Animator Component
+            _animation.Play();
         }
+        
+        //_animator.SetBool("LogWasHit", false);
     }
 }

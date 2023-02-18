@@ -5380,6 +5380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   kunai: {fileID: 1161315204849939358, guid: 9c10eabb77a050c4593abf67e98ed2a8, type: 3}
   log: {fileID: 1002402420}
+  kunaisLeft: {fileID: 969262314924086452, guid: e6098549c04a4964e97282034fe02076, type: 3}
 --- !u!4 &1471518732
 Transform:
   m_ObjectHideFlags: 0

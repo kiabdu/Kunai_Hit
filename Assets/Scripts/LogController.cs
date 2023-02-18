@@ -23,11 +23,7 @@ public class LogController : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Kunai") && !KunaiController.IsGameOver)
         {
-            Debug.Log("Kunai hit the log");
-            //play the "LogHitAnimation" with the new Animator Component
             _animation.Play();
         }
-        
-        //_animator.SetBool("LogWasHit", false);
     }
 }

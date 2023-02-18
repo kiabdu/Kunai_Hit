@@ -34,7 +34,7 @@ public class GameController : MonoBehaviour
     {
         if (KunaiController.IsGameOver)
         {
-            
+            Time.timeScale = 0f;
         }
     }
 }

@@ -7,11 +7,14 @@ public class LogController : MonoBehaviour
 {
     private float _rotationSpeed = 100f;
     private Animation _animation;
+    private ParticleSystem _particleSystem;
     
     void Start()
     {
         _animation = gameObject.GetComponent<Animation>();
         _animation.wrapMode = WrapMode.Once;
+
+        _particleSystem = GameObject.Find("ParticleSystem").GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -24,6 +27,9 @@ public class LogController : MonoBehaviour
         if (col.gameObject.CompareTag("Kunai") && !KunaiController.IsGameOver)
         {
             _animation.Play();
+
+            _particleSystem.transform.position = col.gameObject.transform.position;
+            _particleSystem.Play();
         }
     }
 }

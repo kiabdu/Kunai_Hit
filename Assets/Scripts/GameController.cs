@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
 public class GameController : MonoBehaviour
@@ -32,6 +33,7 @@ public class GameController : MonoBehaviour
     {
         InstantiateKunai();
         GameOver();
+        GameWon();
     }
 
     private void InstantiateKunai()
@@ -39,9 +41,17 @@ public class GameController : MonoBehaviour
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space))
         {
             ScreenTapped = true;
-            Instantiate(kunai, _origin, new Quaternion(0f, 0f, 0f, 0f));
-            _kunaiCount--;
-            _kunaiCounterList[_kunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite_2;
+
+            if (_kunaiCount >= 0)
+            {
+                _kunaiCount--;   
+                _kunaiCounterList[_kunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite_2;
+            }
+            
+            if (_kunaiCount >= 1)
+            {
+                Instantiate(kunai, _origin, new Quaternion(0f, 0f, 0f, 0f));
+            }
         }
     }
     
@@ -51,6 +61,21 @@ public class GameController : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
+    }
+
+    private void GameWon()
+    {
+        
+        if (!KunaiController.IsGameOver && _kunaiCount <= 0)
+        {
+            Timer(1);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    private IEnumerable<WaitForSeconds> Timer(int seconds)
+    {
+        yield return new WaitForSeconds(seconds);
     }
 
     private void CreateKunaiCounter(int count)

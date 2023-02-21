@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,19 +11,24 @@ public class GameController : MonoBehaviour
     public GameObject kunaisLeft;
     public static bool ScreenTapped = false;
     private Vector3 _origin;
-    private int _kunaiCount;
+    public static int KunaiCount;
     private List<GameObject> _kunaiCounterList;
     private Sprite _kunaiLeftSprite_2;
     private SpriteRenderer _kunaiLeftSpriteRenderer;
     private string _kunaiLeftSpritePath;
 
+    private void Awake()
+    {
+        SetKunaiCount();
+    }
+
     void Start()
     {
         _origin = new Vector3(0f, -2.75f, -1f);
         
-        _kunaiCount = 5;
+        KunaiCount = 5;
         _kunaiCounterList = new List<GameObject>();
-        CreateKunaiCounter(_kunaiCount);
+        CreateKunaiCounter(KunaiCount);
 
         _kunaiLeftSpritePath = "Sprites/Kunais_Left_2";
         _kunaiLeftSprite_2 = Resources.Load<Sprite>(_kunaiLeftSpritePath);
@@ -41,14 +47,14 @@ public class GameController : MonoBehaviour
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space))
         {
             ScreenTapped = true;
-
-            if (_kunaiCount >= 0)
+            Debug.Log("Kunai count: " + KunaiCount);
+            if (KunaiCount >= 0)
             {
-                _kunaiCount--;   
-                _kunaiCounterList[_kunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite_2;
+                KunaiCount--;   
+                _kunaiCounterList[KunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite_2;
             }
             
-            if (_kunaiCount >= 1)
+            if (KunaiCount >= 1)
             {
                 Instantiate(kunai, _origin, new Quaternion(0f, 0f, 0f, 0f));
             }
@@ -66,9 +72,10 @@ public class GameController : MonoBehaviour
     private void GameWon()
     {
         
-        if (!KunaiController.IsGameOver && _kunaiCount <= 0)
+        if (KunaiController.IsGameWon)
         {
-            Timer(1);
+            //Timer(1);
+            KunaiController.IsGameWon = false;
             SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
@@ -88,6 +95,22 @@ public class GameController : MonoBehaviour
             GameObject tmp = Instantiate(kunaisLeft, new Vector3(-3f, yStartPosition, -5f), new Quaternion(0f, 0f, 0f, 0f));
             _kunaiCounterList.Add(tmp);
             yStartPosition += yOffset;
+        }
+    }
+
+    private void SetKunaiCount()
+    {
+        switch (SceneManager.GetActiveScene().buildIndex)
+        {
+            case 0:
+                KunaiCount = 3;
+                break;
+            case 1:
+                KunaiCount = 4;
+                break;
+            default:
+                KunaiCount = 5;
+                break;
         }
     }
 }

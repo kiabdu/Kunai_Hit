@@ -16,6 +16,8 @@ Assets/Plugins/Editor/JetBrains*
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
 Assets/AssetStoreTools*
 # Unity local user project setting
 UserSettings/
@@ -48,6 +50,7 @@ ExportedObj/
 sysinfo.txt
 
 # Builds
+*.aab
 *.apk
 *.unitypackage
 

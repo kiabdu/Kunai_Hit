@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour
 
     void Start()
     {
-        _origin = new Vector3(0f, -2.75f, -1f);
+        _origin = new Vector3(3.37f, -2.75f, -1f);
         
         KunaiCount = 5;
         _kunaiCounterList = new List<GameObject>();
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
         if ((Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) || Input.GetKeyDown(KeyCode.Space))
         {
             ScreenTapped = true;
-            Debug.Log("Kunai count: " + KunaiCount);
+            
             if (KunaiCount >= 0)
             {
                 KunaiCount--;   
@@ -89,10 +89,13 @@ public class GameController : MonoBehaviour
     {
         float yStartPosition = -5f;
         float yOffset = 0.5f;
-        
+        float xOffset = Camera.main.ScreenToWorldPoint(
+            new Vector3(Screen.width, 0f, 0f)).x 
+                        - (kunaisLeft.GetComponent<SpriteRenderer>().sprite.bounds.size.x) / 2f;
+
         for (int i = 0; i < count; i++)
         {
-            GameObject tmp = Instantiate(kunaisLeft, new Vector3(-3f, yStartPosition, -5f), new Quaternion(0f, 0f, 0f, 0f));
+            GameObject tmp = Instantiate(kunaisLeft, new Vector3(xOffset, yStartPosition, -5f), new Quaternion(0f, 0f, 0f, 0f));
             _kunaiCounterList.Add(tmp);
             yStartPosition += yOffset;
         }

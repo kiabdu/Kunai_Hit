@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class LogController : MonoBehaviour
 {
-    private float _rotationSpeed = 100f;
+    private float _rotationSpeed = 200f;
     private Animation _animation;
     private ParticleSystem _particleSystem;
     
@@ -20,6 +20,12 @@ public class LogController : MonoBehaviour
     void Update()
     {
         transform.Rotate(new Vector3(0f, 0f, _rotationSpeed * Time.deltaTime));
+        
+        if (AppleController.AppleDestroyed)
+        {
+            StartCoroutine(SlowdownRotation(3));
+            AppleController.AppleDestroyed = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -31,5 +37,12 @@ public class LogController : MonoBehaviour
             _particleSystem.transform.position = col.gameObject.transform.position;
             _particleSystem.Play();
         }
+    }
+
+    private IEnumerator SlowdownRotation(int durationInSeconds)
+    {
+        _rotationSpeed = 50f;
+        yield return new WaitForSeconds(durationInSeconds);
+        _rotationSpeed = 200f;
     }
 }

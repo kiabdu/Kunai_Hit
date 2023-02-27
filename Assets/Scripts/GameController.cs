@@ -13,7 +13,7 @@ public class GameController : MonoBehaviour
     private Vector3 _origin;
     public static int KunaiCount;
     private List<GameObject> _kunaiCounterList;
-    private Sprite _kunaiLeftSprite_2;
+    private Sprite _kunaiLeftSprite2;
     private SpriteRenderer _kunaiLeftSpriteRenderer;
     private string _kunaiLeftSpritePath;
 
@@ -31,7 +31,7 @@ public class GameController : MonoBehaviour
         CreateKunaiCounter(KunaiCount);
 
         _kunaiLeftSpritePath = "Sprites/Kunais_Left_2";
-        _kunaiLeftSprite_2 = Resources.Load<Sprite>(_kunaiLeftSpritePath);
+        _kunaiLeftSprite2 = Resources.Load<Sprite>(_kunaiLeftSpritePath);
     }
 
     // Update is called once per frame
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
             if (KunaiCount >= 0)
             {
                 KunaiCount--;   
-                _kunaiCounterList[KunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite_2;
+                _kunaiCounterList[KunaiCount].GetComponent<SpriteRenderer>().sprite = _kunaiLeftSprite2;
             }
             
             if (KunaiCount >= 1)

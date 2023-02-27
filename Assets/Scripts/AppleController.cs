@@ -10,6 +10,7 @@ public class AppleController : MonoBehaviour
     private GameObject _leftSplit, _rightSplit;
     private SpriteRenderer _spriteRenderer, _leftSplitSpriteRenderer, _rightSplitSpriteRenderer;
     private Rigidbody2D _leftSplitRigidbody2D, _rightSplitRigidbody2D;
+    public static bool AppleDestroyed = false;
     
     void Start()
     {
@@ -26,12 +27,11 @@ public class AppleController : MonoBehaviour
         _rightSplitRigidbody2D = _rightSplit.GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerStay2D(Collider2D col)
+    private void OnTriggerEnter2D(Collider2D col)
     {
         //Layer 6 is the kunai layer, using tag would conflict with the onTriggerEnter method of KunaiController
         if (col.gameObject.layer == 6)
         {
-            Debug.Log("Kunai triggered apple");
             _appleCount++;
             PlayerPrefs.SetInt("AppleCount", _appleCount);
             AnimateSplit();
@@ -41,7 +41,6 @@ public class AppleController : MonoBehaviour
 
     private void AnimateSplit()
     {
-        Debug.Log("Animating split");
         _spriteRenderer.enabled = false;
         _leftSplitSpriteRenderer.enabled = true;
         _rightSplitSpriteRenderer.enabled = true;

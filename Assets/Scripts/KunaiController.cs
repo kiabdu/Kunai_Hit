@@ -33,7 +33,6 @@ public class KunaiController : MonoBehaviour
     {
         if (GameController.ScreenTapped)
         {
-            Debug.Log("Throwing kunai with ID: " + _kunaiID);
             _rigidbody2D.AddForce(new Vector2(0f, _kunaiForce));
             //will be set to true by GameController every time the screen is tapped
             GameController.ScreenTapped = false;
@@ -51,7 +50,9 @@ public class KunaiController : MonoBehaviour
             
             gameObject.transform.parent = col.gameObject.transform;
             gameObject.tag = "Kunai";
+            
             _rigidbody2D.AddForce(new Vector2(50f, -200f));
+            
             Destroy(gameObject.GetComponent<Rigidbody2D>());
             Destroy(gameObject.GetComponent<KunaiController>());
         } else if (col.gameObject.CompareTag("Kunai"))
